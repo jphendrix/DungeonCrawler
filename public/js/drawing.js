@@ -10,6 +10,13 @@ $(function(){
     _dungeon = createDungeon(_dungeon_size);
     
     drawGrid(_dungeon_size*50,_dungeon_size*50,50);
+
+    for(let x=0; x<_dungeon.length; x++){
+        for(let y=0; y<_dungeon[x].length; y++){
+	        console.log(x,y,_dungeon[x][y].room.floor);
+            drawColor(x*50,y*50,50,_dungeon[x][y].room.floor);
+        }
+    }
 });
 
 
@@ -70,7 +77,11 @@ function createRoom(x,y,dungeon){
     
     room.floor = 'dirt';
     
-    let number_of_doors = getRandomNumber(0); //between 0 & 3
+    let number_of_doors = getRandomNumber(3); //between 0 & 3
+	if(number_of_doors<1)
+		room.floor = 'none';
+//if number of doors is zero then floor type is 'none'
+
     for(let i=0; i<number_of_doors; i++){
         
         //TODO:  You might get the same door more than once.  Add code to prevent to of the same door
@@ -106,3 +117,13 @@ let doors = [
     {location:'west',locked:false, description:''},
     {location:'above',locked:true, description:'Trap door in the cieling.  Very sturdy.  Will not budge'}
 ]
+
+function drawColor(x,y,w,floor){
+    //todo: use a diffent color for differnt floor types
+	if (floor == 'dirt') {
+        ctx.fillStyle = "#FF0000";
+    } else {
+        ctx.fillStyle = "#000000";
+    }
+        ctx.fillRect(x, y, w, w);
+}
