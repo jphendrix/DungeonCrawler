@@ -127,3 +127,36 @@ function drawColor(x,y,w,floor){
     }
         ctx.fillRect(x, y, w, w);
 }
+
+
+//TODO: Merge this into the other creae froom function
+//TODO: implement shapes other than rectangle
+//location is the x,y of the top left point
+//width is along the x axis, length is the y axis
+//shape is rectangle, triangle, or circle
+function createRoomv2(location,width,length,shape){
+    let room = {};
+    
+    //a room's location is determined by the points that make us the walls
+    room.location = [];
+    
+    //top-left
+    room.location.push({location});
+    
+    //top-right
+    room.location.push({x:location.x + width,y:location.y});
+    
+    //bottom-right
+    room.location.push({x:location.x+width,y:location.y+length});
+    
+    //bottom-left
+    room.location.push({x:location.x,y:location.y+length});
+    
+}
+
+function createDungeon2(){
+    
+    let dungeon = {};
+    
+    //roll dice to get initial room
+}
