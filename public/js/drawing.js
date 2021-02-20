@@ -121,9 +121,26 @@ let doors = [
 function drawColor(x,y,w,floor){
     //todo: use a diffent color for differnt floor types
 	if (floor == 'dirt') {
-        ctx.fillStyle = "#FF0000";
+        ctx.fillStyle = "#FF0770";
     } else {
-        ctx.fillStyle = "#000000";
+        ctx.fillStyle = "#000050";
     }
         ctx.fillRect(x, y, w, w);
+}
+
+
+let starting_area = {
+    dice:10,
+    configurations:[
+        {min:1,max:1, config:{shape:'square',width:20,length:20,description:'passage on each wall'}},
+        {min:2,max:2, config:{shape:'square',width:20,length:20,description:'door on two walls, passage on thrid wall'}},
+        {min:3,max:3, config:{shape:'square',width:40,length:40,description:'doors on three walls'}},
+        {min:4,max:4, config:{shape:'rectangle',width:80,length:20,description:'row of pillers down the middle, two passages on long walls, one door on each short wall'}},
+        {min:5,max:5, config:{shape:'rectangle',width:20,length:40,description:'passage on each wall'}},
+        {min:6,max:6, config:{shape:'circle',width:40,length:40,description:'one passage at each cardinal direction'}},
+        {min:7,max:7, config:{shape:'circle',width:40,length:40,description:'one passage at each cardinal direction, well in center(may lead to lower level eventually)'}},
+        {min:8,max:8, config:{shape:'square',width:20,length:20,description:'door on two walls, passage on third, secret door on fourth'}},
+        {min:9,max:9, config:{shape:'passage',width:10,length:30,description:'T intersection'}},
+        {min:10,max:10, config:{shape:'passage',width:10,length:50,description:'four-way intersection'
+    ]
 }
