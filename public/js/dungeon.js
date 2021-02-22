@@ -1,3 +1,5 @@
+/*global $*/
+
 Number.prototype.throwDice = function() {
    return Math.floor( (Math.random() * Math.floor(this.valueOf())) )+1;
 };
@@ -30,22 +32,6 @@ let dungeon = {
             for(let i=0; i<room.paths.length; i++){
                 dungeon.map.buildRoom(room.id,room.paths[i]);
             }
-        },
-        info: function(room_id){
-            let room = dungeon.map.rooms[room_id];
-            let description = `room id:${room_id} is at cordinates ${room.location[0].x},${room.location[0].y}. ${room.description}.  the room is a ${room.width}x${room.length} ${room.shape}.  there are ${room.paths.length} paths of travel`;
-
-            for(let i=0; i<room.paths.length; i++){
-                description += `\none may travel ${room.paths[i].direction} via a ${room.paths[i].type} to room id: ${room.paths[i].destination}`
-            }
-                
-            if(room.paths.length==1){
-                description += '\nthis room is a dead end.';
-            }
-            
-            
-            console.log(description);
-          
         },
         buildRoom: function(from_room_id,path){
             let padding = 1;
@@ -136,19 +122,4 @@ let dungeon = {
         }
     }
 };
-
-$(function(){
-    
-    
-    dungeon.map.initialize();
-
-    dungeon.$events.on("map.ready",function(ev,room){
-        drawGrid(800,800);
-    });
-    
-    dungeon.$events.on("room.added",function(ev,room){
-        drawRoom(room);
-    });
-    
-})
 
