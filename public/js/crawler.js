@@ -12,26 +12,24 @@ let _zoom = 4;
 $(function(){
     canvas = document.getElementById("canvas");
     ctx = canvas.getContext("2d");
-    
-    dungeon.map.initialize();
 
-    dungeon.$events.on("map.ready",function(ev,room){
-        drawGrid(800,800);
+    dungeon.$events.off().on("map.ready",function(ev,room){
+        drawMap();
     });
     
-    dungeon.$events.on("room.added",function(ev,room){
+    dungeon.$events.off().on("room.added",function(ev,room){
         drawRoom(room);
     });
     
-    dungeon.$events.on("room.clicked",function(ev,room){
+    dungeon.$events.off().on("room.clicked",function(ev,room){
         displayInfo(room);
     });
     
     $("#canvas").off().on("click",function(ev){
         let canvas_offset = $("#canvas").offset();
         let point = {
-            x:(ev.clientX-canvas_offset.left)-(_x_offset*_zoom),
-            y:(ev.clientY-canvas_offset.top)-(_y_offset*_zoom)
+            x:(ev.clientX-canvas_offset.left)-(_x_offset*_zoom) +$(document).scrollLeft() ,
+            y:(ev.clientY-canvas_offset.top)-(_y_offset*_zoom) + $(document).scrollTop()
         }
         
         let r = findRoom(point,_zoom);
@@ -41,7 +39,7 @@ $(function(){
         }
     });
     
-    $("body").off().on("keydown",function(ev){
+    $("body").off().off().on("keydown",function(ev){
         console.log(ev);
         let redraw = false;
         switch(ev.code.toLowerCase()){
@@ -79,6 +77,8 @@ $(function(){
             drawMap();
         }
     });
+    
+    dungeon.map.initialize();
 
 });
 
@@ -94,11 +94,10 @@ function drawRoom(room){
 }
 
  
-function displayInfo(room_id){
+function displayInfo(room){
     let $info = $("<div class=info>");
-    let room = dungeon.map.rooms[room_id];
     
-    $info.append( $("<h3>",{text:`Room ID:${room_id} @ ${room.location[0].x},${room.location[0].y}`}) )
+    $info.append( $("<h3>",{text:`Room ID:${room.id} @ ${room.location[0].x},${room.location[0].y}`}) )
     $info.append( $("<p>",{text:`${room.description}.  the room is a ${room.width}x${room.length} ${room.shape}.  there are ${room.paths.length} paths of travel`}) )
    
     if(room.paths.length==1){
